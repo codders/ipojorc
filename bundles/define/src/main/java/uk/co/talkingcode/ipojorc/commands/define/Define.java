@@ -5,28 +5,32 @@ import uk.co.talkingcode.ipojorc.api.IRCMessage;
 
 public class Define implements IRCCommand
 {
+  private IRCMessage generateResponse(IRCMessage incoming, String query, String result)
+  {
+    incoming.setProcessed(true);
+    IRCMessage response = new IRCMessage();
+    response.setChannel(incoming.getChannel());
+    response.setMessage("*" + query + "* " + result);
+    return response;
+  }
+  
 	public IRCMessage handleCommand(IRCMessage message)
 	{
-		if (!message.isProcessed() && message != null && message.getMessage().startsWith("!define "))
-		{
-			message.setProcessed(true);
-			String query = message.getMessage().substring(8);
-			IRCMessage define = new IRCMessage();
-			UrbanLookup ul = new UrbanLookup(query);
-			define.setChannel(message.getChannel());
-			define.setMessage("*" + query + "* " + ul.getDefinition());
-			return define;
-	    }
-		if (!message.isProcessed() && message != null && message.getMessage().startsWith("!example "))
-		{
-			message.setProcessed(true);
-			String query = message.getMessage().substring(9);
-			IRCMessage example = new IRCMessage();
-			UrbanLookup ul = new UrbanLookup(query);
-			example.setChannel(message.getChannel());
-			example.setMessage("*" + query + "* " + ul.getExample());
-			return example;
+	  if (!message.isProcessed() && message != null)
+	  {
+	    if (message.getMessage().startsWith("!define "))
+	    {		    
+		  String query = message.getMessage().substring(8);
+		  UrbanLookup ul = new UrbanLookup(query);
+		  return generateResponse(message, query, ul.getDefinition());
 		}
-		return null;
+		else if (message.getMessage().startsWith("!example "))
+		{
+		  String query = message.getMessage().substring(9);
+	      UrbanLookup ul = new UrbanLookup(query);
+	      return generateResponse(message, query, ul.getExample());
+		}
+	  }
+	  return null;
 	}
 }
