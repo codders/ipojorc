@@ -4,5 +4,5 @@
     name="DefineCommandProvider" architecture="true">
     <provides />
   </component>
-  <instance component="DefineCommandProvider" name="IRCCommand" />
+  <instance component="DefineCommandProvider" name="DefineCommand" />
 </iPOJO>

@@ -12,7 +12,7 @@
 		</provides>
   </component>
   <instance component="uk.co.talkingcode.ipojorc.core.Bot">
-  	<property name="channel" value="#tropic"/>
+  	<property name="channel" value="#test"/>
   	<property name="server" value="irc.tropic.org.uk"/>
   	<property name="nick" value="codbot"/>
   </instance>

@@ -21,8 +21,27 @@
           <Private-Package>
             uk.co.talkingcode.ipojorc.commands.define
           </Private-Package>
+          <Export-Package>uk.co.talkingcode.ipojorc.api</Export-Package>
+          <Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
          </instructions>
          </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>embed-dependencies</id>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <includeArtifactIds>commons-lang</includeArtifactIds>
+              <excludeTransitive>false</excludeTransitive>
+              <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.felix</groupId>
