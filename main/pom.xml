@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>uk.co.talkingcode.ipojorc</groupId>
+    <artifactId>base</artifactId>
+    <version>0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>app</artifactId>
+  <packaging>jar</packaging>
+  <name>Main App</name>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>install</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+                <artifactItems>
+                  <artifactItem>
+                     <groupId>org.apache.felix</groupId>
+                     <artifactId>org.apache.felix.main</artifactId>
+                     <version>1.6.1</version>
+                     <type>jar</type>
+                     <overWrite>true</overWrite>
+                     <outputDirectory>${project.build.directory}</outputDirectory>
+                   </artifactItem>
+                  <artifactItem>
+                     <groupId>org.apache.felix</groupId>
+                     <artifactId>org.apache.felix.shell</artifactId>
+                     <version>1.2.0</version>
+                     <type>jar</type>
+                     <overWrite>true</overWrite>
+                     <outputDirectory>${project.build.directory}/bundle</outputDirectory>
+                   </artifactItem>
+                   <artifactItem>
+                     <groupId>org.apache.felix</groupId>
+                     <artifactId>org.apache.felix.shell.tui</artifactId>
+                     <version>1.2.0</version>
+                     <type>jar</type>
+                     <overWrite>true</overWrite>
+                     <outputDirectory>${project.build.directory}/bundle</outputDirectory>
+                   </artifactItem>
+                   <artifactItem>
+                     <groupId>org.apache.felix</groupId>
+                     <artifactId>org.apache.felix.bundlerepository</artifactId>
+                     <version>1.4.0</version>
+                     <type>jar</type>
+                     <overWrite>true</overWrite>
+                     <outputDirectory>${project.build.directory}/bundle</outputDirectory>
+                   </artifactItem>
+                   <artifactItem>
+                     <groupId>org.apache.felix</groupId>
+                     <artifactId>org.apache.felix.ipojo</artifactId>
+                     <version>1.2.0</version>
+                     <type>jar</type>
+                     <overWrite>true</overWrite>
+                     <outputDirectory>${project.build.directory}/bundle</outputDirectory>
+                   </artifactItem>
+                   <artifactItem>
+                     <groupId>${pom.groupId}</groupId>
+                     <artifactId>core</artifactId>
+                     <version>${pom.version}</version>
+                     <type>jar</type>
+                     <overWrite>true</overWrite>
+                     <outputDirectory>${project.build.directory}/bundle</outputDirectory>
+                   </artifactItem>
+                   <artifactItem>
+                     <groupId>${pom.groupId}</groupId>
+                     <artifactId>echo-command</artifactId>
+                     <version>${pom.version}</version>
+                     <type>jar</type>
+                     <overWrite>true</overWrite>
+                     <outputDirectory>${project.build.directory}/bundle</outputDirectory>
+                   </artifactItem>
+                   <artifactItem>
+                     <groupId>${pom.groupId}</groupId>
+                     <artifactId>define-command</artifactId>
+                     <version>${pom.version}</version>
+                     <type>jar</type>
+                     <overWrite>true</overWrite>
+                     <outputDirectory>${project.build.directory}/bundle</outputDirectory>
+                   </artifactItem>
+                   <artifactItem>
+                     <groupId>${pom.groupId}</groupId>
+                     <artifactId>help-command</artifactId>
+                     <version>${pom.version}</version>
+                     <type>jar</type>
+                     <overWrite>true</overWrite>
+                     <outputDirectory>${project.build.directory}/bundle</outputDirectory>
+                   </artifactItem>
+
+                 </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>ant-install</id>
+            <phase>install</phase>
+            <configuration>
+              <tasks>
+                <delete dir="${basedir}/bin" />
+                <mkdir dir="${basedir}/bin" />
+                <delete dir="${basedir}/conf" />
+                <mkdir dir="${basedir}/conf" />
+                <delete dir="${basedir}/bundle" />
+                <copy file="${basedir}/target/org.apache.felix.main-1.6.1.jar" tofile="${basedir}/bin/felix.jar" />
+                <copy file="${basedir}/target/classes/config.properties" todir="${basedir}/conf" />
+                <move file="${basedir}/target/bundle" todir="${basedir}" />
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>ant-clean</id>
+            <phase>clean</phase>
+            <configuration>
+              <tasks>
+                <delete dir="${basedir}/bin" />
+                <delete dir="${basedir}/felix-cache" />
+                <delete dir="${basedir}/conf" />
+                <delete dir="${basedir}/bundle" />
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

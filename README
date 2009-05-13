@@ -1,0 +1,5 @@
+In principle:
+
+mvn install
+cd main
+./start.sh

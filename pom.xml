@@ -19,6 +19,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <modules>
+        <module>main</module>
         <module>bundles/core</module>
         <module>bundles/echo</module>
         <module>bundles/api</module>
