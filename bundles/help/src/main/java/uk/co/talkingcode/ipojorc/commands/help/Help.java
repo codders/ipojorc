@@ -1,25 +1,29 @@
 package uk.co.talkingcode.ipojorc.commands.help;
 
+import uk.co.talkingcode.ipojorc.api.AbstractPrefixCommand;
 import uk.co.talkingcode.ipojorc.api.IRCCommand;
 import uk.co.talkingcode.ipojorc.api.IRCMessage;
 
-public class Help implements IRCCommand
+public class Help extends AbstractPrefixCommand
 {
+  public Help() {
+    super("help");
+  }
+
   private IRCCommand[] commands;
 
-  public IRCMessage handleCommand(IRCMessage message) {
-    if (message.getMessage().equals("!help"))
-    {
-      StringBuilder builder = new StringBuilder("Help:");
-      for (int i=0; i<commands.length; i++)
-      {
-        builder.append("\n  " + commands[i].toString());
-      }
-      IRCMessage result = new IRCMessage();
-      result.setChannel(message.getChannel());
-      result.setMessage(builder.toString());
-      return result;
-    }
-    return null;
+  public String getDescription() {
+    return "!help - Displays this help message";
   }
+
+  @Override
+  protected IRCMessage handleCommand(IRCMessage message, String data) {
+    IRCMessage result = message.createReply("Help:");
+    for (int i=0; i<commands.length; i++)
+    {
+      result.appendMessage(message.createReply(commands[i].getDescription()));
+    }
+    return result;
+  }
+  
 }

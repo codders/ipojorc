@@ -4,5 +4,5 @@
     name="EchoCommandProvider" architecture="true">
     <provides />
   </component>
-  <instance component="EchoCommandProvider" name="IRCCommand" />
+  <instance component="EchoCommandProvider"/>
 </iPOJO>

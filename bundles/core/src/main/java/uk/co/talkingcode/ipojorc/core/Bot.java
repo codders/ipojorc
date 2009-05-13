@@ -56,23 +56,35 @@ class Bot extends PircBot implements Runnable {
   protected void onMessage(String channel, String sender, String login,
       String hostname, String message) {
     System.out.println("Processing: " + message);
-    IRCMessage ircMessage = new IRCMessage();
+    IRCMessage ircMessage = new IRCMessage(sender, login, hostname, message);
     ircMessage.setChannel(channel);
-    ircMessage.setSender(sender);
-    ircMessage.setLogin(login);
-    ircMessage.setHostname(hostname);
-    ircMessage.setMessage(message);
     System.out.println(commands.length + " handlers");
     for (int i=0; i<commands.length; i++)
     {
       IRCMessage reply = commands[i].handleCommand(ircMessage);
-      if (reply != null)
+      while (reply != null)
       {
-        System.out.println("Sending reply");
         sendMessage(reply.getChannel(), reply.getMessage());
+        reply = reply.getNextMessage();
       }
     }
   }
-	
+
+  @Override
+  protected void onPrivateMessage(String sender, String login, String hostname,
+      String message) {
+    IRCMessage ircMessage = new IRCMessage(sender, login, hostname, message);
+    System.out.println(commands.length + " handlers");
+    for (int i=0; i<commands.length; i++)
+    {
+      IRCMessage reply = commands[i].handlePrivateMessage(ircMessage);
+      while (reply != null)
+      {
+        sendMessage(reply.getChannel(), reply.getMessage());
+        reply = reply.getNextMessage();
+      }
+    }
+  }
+
 }
 

@@ -4,5 +4,10 @@
     name="DefineCommandProvider" architecture="true">
     <provides />
   </component>
-  <instance component="DefineCommandProvider" name="DefineCommand" />
+  <component className="uk.co.talkingcode.ipojorc.commands.define.Example"
+    name="ExampleCommandProvider" architecture="true">
+    <provides />
+  </component>
+  <instance component="DefineCommandProvider"/>
+  <instance component="ExampleCommandProvider"/>
 </iPOJO>

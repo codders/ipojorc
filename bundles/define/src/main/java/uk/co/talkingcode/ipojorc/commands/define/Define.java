@@ -1,36 +1,21 @@
 package uk.co.talkingcode.ipojorc.commands.define;
 
-import uk.co.talkingcode.ipojorc.api.IRCCommand;
+import uk.co.talkingcode.ipojorc.api.AbstractPrefixCommand;
 import uk.co.talkingcode.ipojorc.api.IRCMessage;
 
-public class Define implements IRCCommand
-{
-  private IRCMessage generateResponse(IRCMessage incoming, String query, String result)
-  {
-    incoming.setProcessed(true);
-    IRCMessage response = new IRCMessage();
-    response.setChannel(incoming.getChannel());
-    response.setMessage("*" + query + "* " + result);
-    return response;
+public class Define extends AbstractPrefixCommand {
+
+  public Define() {
+    super("define");
   }
-  
-	public IRCMessage handleCommand(IRCMessage message)
-	{
-	  if (!message.isProcessed() && message != null)
-	  {
-	    if (message.getMessage().startsWith("!define "))
-	    {		    
-		  String query = message.getMessage().substring(8);
-		  UrbanLookup ul = new UrbanLookup(query);
-		  return generateResponse(message, query, ul.getDefinition());
-		}
-		else if (message.getMessage().startsWith("!example "))
-		{
-		  String query = message.getMessage().substring(9);
-	      UrbanLookup ul = new UrbanLookup(query);
-	      return generateResponse(message, query, ul.getExample());
-		}
-	  }
-	  return null;
-	}
+
+  public String getDescription() {
+    return "!define - Retrieves an Urban Dictionary definition";
+  }
+
+  @Override
+  protected IRCMessage handleCommand(IRCMessage message, String data) {
+    UrbanLookup ul = new UrbanLookup(data);
+    return message.createReply("*" + data + "* " + ul.getDefinition());
+  }
 }

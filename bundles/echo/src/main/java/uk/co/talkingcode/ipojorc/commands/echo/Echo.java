@@ -1,22 +1,21 @@
 package uk.co.talkingcode.ipojorc.commands.echo;
 
-import uk.co.talkingcode.ipojorc.api.IRCCommand;
+import uk.co.talkingcode.ipojorc.api.AbstractPrefixCommand;
 import uk.co.talkingcode.ipojorc.api.IRCMessage;
 
-public class Echo implements IRCCommand {
+public class Echo extends AbstractPrefixCommand {
 
-  public IRCMessage handleCommand(IRCMessage message) {
-    if (!message.isProcessed() && 
-        message.getMessage().startsWith("!echo "))
-    {
-      message.setProcessed(true);
+  public Echo() {
+    super("echo");
+  }
 
-      IRCMessage echo = new IRCMessage();
-      echo.setChannel(message.getChannel());
-      echo.setMessage(message.getMessage().substring(6));
-      return echo;
-    }
-    return null;
+  public String getDescription() {
+    return "!echo - Echoes the entered text";
+  }
+
+  @Override
+  protected IRCMessage handleCommand(IRCMessage message, String data) {
+    return message.createReply(data);
   }
 
 }

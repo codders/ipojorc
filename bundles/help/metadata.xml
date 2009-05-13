@@ -5,5 +5,5 @@
     <provides />
     <requires field="commands" required="false"/>
   </component>
-  <instance component="HelpCommandProvider" name="HelpCommand" />
+  <instance component="HelpCommandProvider" />
 </iPOJO>

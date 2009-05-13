@@ -10,9 +10,35 @@ public class IRCMessage {
   String message;
   Date created;
   boolean processed;
+  private IRCMessage nextMessage;
 
   public IRCMessage() {
     created = new Date();
+  }
+  
+  public IRCMessage(String sender, String login, String hostname,
+      String message) {
+    this.sender = sender;
+    this.login = login;
+    this.hostname = hostname;
+    this.message = message;
+  }
+
+  public void appendMessage(IRCMessage message)
+  {
+    if (nextMessage != null)
+    {
+      IRCMessage last = nextMessage;
+      while (last.getNextMessage() != null)
+      {
+        last = last.getNextMessage();
+      }
+      last.appendMessage(message);
+    }
+    else
+    {
+      nextMessage = message;
+    }
   }
 
   public String getChannel() {
@@ -65,6 +91,24 @@ public class IRCMessage {
 
   public Date getCreated() {
     return created;
+  }
+
+  public IRCMessage getNextMessage() {
+    return nextMessage;
+  }
+
+  public IRCMessage createReply(String message) {
+    IRCMessage reply = new IRCMessage();
+    if (channel != null)
+    {
+      reply.setChannel(channel);
+    }
+    else
+    {
+      reply.setChannel(sender);
+    }
+    reply.setMessage(message);
+    return reply;
   }
 
 }

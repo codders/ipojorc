@@ -1,5 +1,7 @@
 In principle:
 
+Configure the server, channel and nick in bundles/core/metadata.xml
+
 mvn install
 cd main
 ./start.sh
