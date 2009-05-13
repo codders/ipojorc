@@ -22,7 +22,8 @@
         <module>bundles/core</module>
         <module>bundles/echo</module>
         <module>bundles/api</module>
-	<module>bundles/define</module>
+      	<module>bundles/define</module>
+      	<module>bundles/help</module>
       </modules>
     </profile>
   </profiles>
