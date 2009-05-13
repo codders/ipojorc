@@ -9,22 +9,27 @@ class Bot extends PircBot implements Runnable {
   
   private boolean stop = true;
   private IRCCommand[] commands;
+  private String channel;
+  private String server;
+  private String nick;
   
   public Bot() {
     super();
-    setName("CodBot");
   }
   
   public void run() {
     System.out.println("Starting");
+    System.out.println("Server: " + server);
+    System.out.println("Channel: " + channel);
+    setName(nick);
     setVerbose(true);
     try {
-      connect("irc.tropic.org.uk");
+      connect(server);
     } catch (Exception e) {
       System.err.println("Unable to connect");
       e.printStackTrace();
     }
-    joinChannel("#codders"); 
+    joinChannel(channel); 
     while (!stop) {
       try {
         Thread.sleep(2000);

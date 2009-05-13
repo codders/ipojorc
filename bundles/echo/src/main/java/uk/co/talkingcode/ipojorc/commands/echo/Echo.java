@@ -13,8 +13,8 @@ public class Echo implements IRCCommand {
       message.setProcessed(true);
 
       IRCMessage echo = new IRCMessage();
-      message.setChannel(message.getChannel());
-      message.setMessage(message.getMessage().substring(6));
+      echo.setChannel(message.getChannel());
+      echo.setMessage(message.getMessage().substring(6));
       return echo;
     }
     return null;

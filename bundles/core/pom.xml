@@ -25,6 +25,7 @@ org.xml.sax,
 org.xml.sax.ext,
 org.xml.sax.helpers,
 org.slf4j.*;resolution:=optional,
+uk.co.talkingcode.ipojorc.api,
 *</Import-Package>
           <Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
           <Private-Package>

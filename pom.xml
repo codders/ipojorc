@@ -20,6 +20,8 @@
       </activation>
       <modules>
         <module>bundles/core</module>
+        <module>bundles/echo</module>
+        <module>bundles/api</module>
       </modules>
     </profile>
   </profiles>
