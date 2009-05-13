@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iPOJO>
+  <component className="uk.co.talkingcode.ipojorc.core.Bot"
+    architecture="true">
+    <requires field="commands"/>
+    <callback transition="validate" method="starting" />
+    <callback transition="invalidate" method="stopping" />
+  </component>
+  <instance component="uk.co.talkingcode.ipojorc.core.Bot">
+  </instance>
+</iPOJO>
