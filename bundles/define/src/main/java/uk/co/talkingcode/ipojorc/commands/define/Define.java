@@ -11,11 +11,11 @@ public class Define implements IRCCommand {
         message.getMessage().startsWith("!define "))
     {
       message.setProcessed(true);
-
+      String query = message.getMessage().substring(8));
       IRCMessage define = new IRCMessage();
-      UrbanLookup ul = new UrbanLookup(message.getMessage().substring(8));
+      UrbanLookup ul = new UrbanLookup(query);
       define.setChannel(message.getChannel());
-      define.setMessage(ul.getDefinition());
+      define.setMessage("*" + query + "* " + ul.getDefinition());
       return define;
     }
     return null;
