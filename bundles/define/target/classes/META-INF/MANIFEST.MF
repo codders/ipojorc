@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Private-Package: uk.co.talkingcode.ipojorc.commands.define
+Built-By: mjh
+Tool: Bnd-0.0.255
+Bundle-Category: ipojorc
+Bundle-Name: Define Command
+Created-By: Apache Maven Bundle Plugin
+Bundle-Vendor: Talkingcode
+Build-Jdk: 1.6.0_13
+Bundle-Version: 0.1.0.SNAPSHOT
+Bnd-LastModified: 1242215254410
+Bundle-ManifestVersion: 2
+Bundle-Description: Pluggable IRC client on Felix
+Import-Package: org.apache.commons.lang;version="2.4",uk.co.talkingcod
+ e.ipojorc.api
+Bundle-SymbolicName: define-command
+
