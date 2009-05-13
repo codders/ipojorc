@@ -13,7 +13,7 @@ public class Define implements IRCCommand {
       message.setProcessed(true);
 
       IRCMessage define = new IRCMessage();
-      UrbanLookup ul = new UrbanLookup(message.getMessage().substring(9));
+      UrbanLookup ul = new UrbanLookup(message.getMessage().substring(8));
       define.setChannel(message.getChannel());
       define.setMessage(ul.getDefinition());
       return define;
