@@ -7,7 +7,7 @@ public class Echo implements IRCCommand {
 
   public IRCMessage handleCommand(IRCMessage message) {
     if (!message.isProcessed() && 
-        message.getMessage().startsWith("!echo"))
+        message.getMessage().startsWith("!echo "))
     {
       message.setProcessed(true);
 
