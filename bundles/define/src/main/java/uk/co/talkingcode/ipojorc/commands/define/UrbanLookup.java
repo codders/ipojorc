@@ -80,7 +80,8 @@ public class UrbanLookup
 			//debug("tmp = " + tmp);
 			String tmp2 = tmp.split("</div>")[0];
 			//debug("tmp2 = " + tmp2);
-			return(StringEscapeUtils.unescapeHtml(tmp2.trim()));
+			String result = StringEscapeUtils.unescapeHtml(tmp2.trim());
+      return result.replaceAll("<br/>","");
 		}
 		else
 		{

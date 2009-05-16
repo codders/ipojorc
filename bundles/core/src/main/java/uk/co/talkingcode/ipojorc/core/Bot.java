@@ -64,7 +64,12 @@ class Bot extends PircBot implements Runnable {
       IRCMessage reply = commands[i].handleCommand(ircMessage);
       while (reply != null)
       {
-        sendMessage(reply.getChannel(), reply.getMessage());
+        String replyString = reply.getMessage();
+        String[] parts = replyString.split("\n\r|\r|\n");
+        for (String part : parts)
+        {
+          sendMessage(reply.getChannel(), part);
+        }
         reply = reply.getNextMessage();
       }
     }
