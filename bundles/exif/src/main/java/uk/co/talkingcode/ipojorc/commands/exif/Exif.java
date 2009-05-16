@@ -51,7 +51,7 @@ public class Exif extends AbstractURLWatchingPrefixCommand {
     }
     StringBuilder result = new StringBuilder("Image information:\n");
     for (Object item : items) {
-      result.append(item.toString());
+      result.append(item.toString() + "\n");
     }
     return result.toString();
   }
