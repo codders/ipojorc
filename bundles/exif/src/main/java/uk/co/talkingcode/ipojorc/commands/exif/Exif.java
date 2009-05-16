@@ -49,10 +49,10 @@ public class Exif extends AbstractURLWatchingPrefixCommand {
     if (items.size() == 0) {
       throw new ImageReadException("No metadata items found");
     }
-    StringBuilder result = new StringBuilder("Image information:\n");
+    StringBuilder result = new StringBuilder("");
     for (Object item : items) {
-      result.append(item.toString() + "\n");
+      result.append(", " + item.toString());
     }
-    return result.toString();
+    return result.toString().substring(2);
   }
 }
