@@ -23,13 +23,13 @@ public class TestURLParsing {
     };
     
     assertNull("Expected no url", command.lastUrl);
-    command.handleCommand(stringMessage("Fish"));
+    command.handlePublicMessage(stringMessage("Fish"));
     assertNull("Still expected no url", command.lastUrl);
-    command.handleCommand(stringMessage("http://www.fish.com/fish.jpg"));
+    command.handlePublicMessage(stringMessage("http://www.fish.com/fish.jpg"));
     assertEquals("Expected url capture", "http://www.fish.com/fish.jpg", command.lastUrl);
-    command.handleCommand(stringMessage("Cat"));
+    command.handlePublicMessage(stringMessage("Cat"));
     assertEquals("Expected no url capture", "http://www.fish.com/fish.jpg", command.lastUrl);
-    command.handleCommand(stringMessage("Look at this!!! : http://www.fish.com/ <<--- a url"));
+    command.handlePublicMessage(stringMessage("Look at this!!! : http://www.fish.com/ <<--- a url"));
     assertEquals("Expected url capture", "http://www.fish.com/", command.lastUrl);
   }
   

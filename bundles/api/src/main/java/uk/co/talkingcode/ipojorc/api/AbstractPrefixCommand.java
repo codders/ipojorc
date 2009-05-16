@@ -4,7 +4,7 @@ public abstract class AbstractPrefixCommand implements IRCCommand {
 
   private String prefix;
 
-  public IRCMessage handleCommand(IRCMessage message) {
+  public IRCMessage handlePublicMessage(IRCMessage message) {
     if (!message.isProcessed())
     {
       String messageText = message.getMessage();
@@ -19,7 +19,7 @@ public abstract class AbstractPrefixCommand implements IRCCommand {
   }
 
   public IRCMessage handlePrivateMessage(IRCMessage message) {
-    return handleCommand(message);
+    return handlePublicMessage(message);
   }
 
   protected abstract IRCMessage handleCommand(IRCMessage message, String data);

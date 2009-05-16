@@ -95,7 +95,14 @@
                      <overWrite>true</overWrite>
                      <outputDirectory>${project.build.directory}/bundle</outputDirectory>
                    </artifactItem>
-
+                   <artifactItem>
+                     <groupId>${pom.groupId}</groupId>
+                     <artifactId>exif-command</artifactId>
+                     <version>${pom.version}</version>
+                     <type>jar</type>
+                     <overWrite>true</overWrite>
+                     <outputDirectory>${project.build.directory}/bundle</outputDirectory>
+                   </artifactItem>
                  </artifactItems>
             </configuration>
           </execution>

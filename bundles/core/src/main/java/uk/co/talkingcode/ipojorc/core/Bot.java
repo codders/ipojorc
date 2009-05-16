@@ -2,8 +2,11 @@ package uk.co.talkingcode.ipojorc.core;
 
 import org.jibble.pircbot.PircBot;
 
+import uk.co.talkingcode.ipojorc.api.AbstractIncomingIRCMessage;
 import uk.co.talkingcode.ipojorc.api.IRCCommand;
 import uk.co.talkingcode.ipojorc.api.IRCMessage;
+import uk.co.talkingcode.ipojorc.api.PrivateIRCMessage;
+import uk.co.talkingcode.ipojorc.api.PublicIRCMessage;
 
 class Bot extends PircBot implements Runnable {
   
@@ -56,39 +59,38 @@ class Bot extends PircBot implements Runnable {
   protected void onMessage(String channel, String sender, String login,
       String hostname, String message) {
     System.out.println("Processing: " + message);
-    IRCMessage ircMessage = new IRCMessage(sender, login, hostname, message);
+    AbstractIncomingIRCMessage ircMessage = new PublicIRCMessage(sender, login, hostname, message);
     ircMessage.setChannel(channel);
+    dispatchToCommands(ircMessage);
+  }
+
+  private void dispatchToCommands(AbstractIncomingIRCMessage ircMessage) {
     System.out.println(commands.length + " handlers");
     for (int i=0; i<commands.length; i++)
     {
-      IRCMessage reply = commands[i].handleCommand(ircMessage);
+      IRCMessage reply = commands[i].handlePublicMessage(ircMessage);
       while (reply != null)
       {
-        String replyString = reply.getMessage();
-        String[] parts = replyString.split("\n\r|\r|\n");
-        for (String part : parts)
-        {
-          sendMessage(reply.getChannel(), part);
-        }
-        reply = reply.getNextMessage();
+        reply = processLines(reply);
       }
     }
+  }
+
+  private IRCMessage processLines(IRCMessage reply) {
+    String replyString = reply.getMessage();
+    String[] parts = replyString.split("\n\r|\r|\n");
+    for (String part : parts)
+    {
+      sendMessage(reply.getChannel(), part);
+    }
+    return reply.getNextMessage();
   }
 
   @Override
   protected void onPrivateMessage(String sender, String login, String hostname,
       String message) {
-    IRCMessage ircMessage = new IRCMessage(sender, login, hostname, message);
-    System.out.println(commands.length + " handlers");
-    for (int i=0; i<commands.length; i++)
-    {
-      IRCMessage reply = commands[i].handlePrivateMessage(ircMessage);
-      while (reply != null)
-      {
-        sendMessage(reply.getChannel(), reply.getMessage());
-        reply = reply.getNextMessage();
-      }
-    }
+    AbstractIncomingIRCMessage ircMessage = new PrivateIRCMessage(sender, login, hostname, message);
+    dispatchToCommands(ircMessage);
   }
 
 }
