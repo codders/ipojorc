@@ -25,6 +25,7 @@
       	<module>bundles/define</module>
       	<module>bundles/help</module>
       	<module>bundles/exif</module>
+      	<module>bundles/title</module>
         <module>main</module>
       </modules>
     </profile>

@@ -89,6 +89,14 @@
                    </artifactItem>
                    <artifactItem>
                      <groupId>${pom.groupId}</groupId>
+                     <artifactId>title-command</artifactId>
+                     <version>${pom.version}</version>
+                     <type>jar</type>
+                     <overWrite>true</overWrite>
+                     <outputDirectory>${project.build.directory}/bundle</outputDirectory>
+                   </artifactItem>
+                   <artifactItem>
+                     <groupId>${pom.groupId}</groupId>
                      <artifactId>help-command</artifactId>
                      <version>${pom.version}</version>
                      <type>jar</type>
