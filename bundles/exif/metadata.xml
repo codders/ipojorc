@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <iPOJO>
-  <component className="uk.co.talkingcode.ipojorc.commands.exif.Exif"
-    name="ExifCommandProvider" architecture="true">
-    <provides />
-  </component>
   <instance component="ExifCommandProvider"/>
 </iPOJO>

@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <iPOJO>
-  <component className="uk.co.talkingcode.ipojorc.commands.echo.Echo"
-    name="EchoCommandProvider" architecture="true">
-    <provides />
-  </component>
   <instance component="EchoCommandProvider"/>
 </iPOJO>

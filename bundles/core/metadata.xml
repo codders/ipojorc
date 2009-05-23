@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <iPOJO>
-  <component className="uk.co.talkingcode.ipojorc.core.Bot"
-    architecture="true">
-    <requires field="commands" optional="true" nullable="true"/>
-    <requires field="watchers" optional="true" nullable="true"/>
-    <callback transition="validate" method="starting" />
-    <callback transition="invalidate" method="stopping" />
-		<provides>
-		  <property name="channel" field="channel" mandatory="true"/>
-  	  <property name="server" field="server" mandatory="true"/>
-     	<property name="nick" field="nick" mandatory="true"/>
-		</provides>
-  </component>
-  <instance component="uk.co.talkingcode.ipojorc.core.Bot">
+  <instance component="IrcBot">
   	<property name="channel" value="#test"/>
   	<property name="server" value="irc.tropic.org.uk"/>
   	<property name="nick" value="manbot2"/>

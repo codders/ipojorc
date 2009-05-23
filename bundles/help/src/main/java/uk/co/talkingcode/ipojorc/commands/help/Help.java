@@ -1,9 +1,14 @@
 package uk.co.talkingcode.ipojorc.commands.help;
 
+import org.apache.felix.ipojo.annotations.Component;
+import org.apache.felix.ipojo.annotations.Provides;
+
 import uk.co.talkingcode.ipojorc.api.AbstractPrefixCommand;
 import uk.co.talkingcode.ipojorc.api.IRCCommand;
 import uk.co.talkingcode.ipojorc.api.messages.IRCMessage;
 
+@Provides
+@Component(name="HelpCommandProvider", architecture=true)
 public class Help extends AbstractPrefixCommand
 {
   public Help() {

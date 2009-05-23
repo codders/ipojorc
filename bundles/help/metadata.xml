@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <iPOJO>
-  <component className="uk.co.talkingcode.ipojorc.commands.help.Help"
-    name="HelpCommandProvider" architecture="true">
-    <provides />
-    <requires field="commands" required="false"/>
-  </component>
   <instance component="HelpCommandProvider" />
 </iPOJO>

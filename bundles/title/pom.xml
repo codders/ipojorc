@@ -73,5 +73,10 @@
       <artifactId>commons-lang</artifactId>
       <version>2.4</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.ipojo.annotations</artifactId>
+      <version>1.2.0</version>
+		</dependency>
   </dependencies>
 </project>

@@ -10,10 +10,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.felix.ipojo.annotations.Component;
+import org.apache.felix.ipojo.annotations.Provides;
 
 import uk.co.talkingcode.ipojorc.api.AbstractURLWatchingPrefixCommand;
 import uk.co.talkingcode.ipojorc.api.messages.IRCMessage;
 
+@Provides
+@Component(name="TitleCommandProvider", architecture=true)
 public class Title extends AbstractURLWatchingPrefixCommand {
   private static Pattern pattern = Pattern
       .compile(".*<title>(.*)</title>.*");

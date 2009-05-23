@@ -11,6 +11,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.felix.ipojo.annotations.Component;
+import org.apache.felix.ipojo.annotations.Provides;
+
 import uk.co.talkingcode.ipojorc.api.AbstractChatWatchingPrefixCommand;
 import uk.co.talkingcode.ipojorc.api.IRCUser;
 import uk.co.talkingcode.ipojorc.api.messages.IRCMessage;
@@ -18,6 +21,8 @@ import uk.co.talkingcode.ipojorc.api.messages.JoinMessage;
 import uk.co.talkingcode.ipojorc.api.messages.PartMessage;
 import uk.co.talkingcode.ipojorc.api.messages.QuitMessage;
 
+@Provides
+@Component(name="ScrollbackCommandProvider", architecture=true)
 public class Scrollback extends AbstractChatWatchingPrefixCommand {
 
   private Pattern register = Pattern.compile("register");

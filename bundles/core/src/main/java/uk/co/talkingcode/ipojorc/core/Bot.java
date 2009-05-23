@@ -1,5 +1,11 @@
 package uk.co.talkingcode.ipojorc.core;
 
+import org.apache.felix.ipojo.annotations.Component;
+import org.apache.felix.ipojo.annotations.Invalidate;
+import org.apache.felix.ipojo.annotations.Property;
+import org.apache.felix.ipojo.annotations.Provides;
+import org.apache.felix.ipojo.annotations.Requires;
+import org.apache.felix.ipojo.annotations.Validate;
 import org.jibble.pircbot.PircBot;
 
 import uk.co.talkingcode.ipojorc.api.IRCCommand;
@@ -13,13 +19,22 @@ import uk.co.talkingcode.ipojorc.api.messages.PrivateIRCMessage;
 import uk.co.talkingcode.ipojorc.api.messages.PublicIRCMessage;
 import uk.co.talkingcode.ipojorc.api.messages.QuitMessage;
 
+@Component(name="IrcBot", immediate=true, architecture=true)
+@Provides
 class Bot extends PircBot implements Runnable {
   
   private boolean stop = true;
+  
+  @Requires
   private IRCCommand[] commands;
+  @Requires
   private IRCStatusWatcher[] watchers;
+  
+  @Property(mandatory=true)
   private String channel;
+  @Property(mandatory=true)
   private String server;
+  @Property(mandatory=true)
   private String nick;
   
   public Bot() {
@@ -48,7 +63,8 @@ class Bot extends PircBot implements Runnable {
     }
     disconnect();
   }
-  
+
+  @Validate
   public void starting() {
     System.out.println("Starting");
      Thread t = new Thread(this);     
@@ -56,6 +72,7 @@ class Bot extends PircBot implements Runnable {
      t.start(); 
   }
 
+  @Invalidate
   public void stopping() {    
     System.out.println("Stoppingh");
       stop = true; 
