@@ -2,8 +2,11 @@ package uk.co.talkingcode.ipojorc.commands.scrollback;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,11 +22,11 @@ public class Scrollback extends AbstractChatWatchingPrefixCommand {
 
   private Pattern register = Pattern.compile("register");
   private Pattern unregister = Pattern.compile("unregister");
-  private Pattern display = Pattern.compile("display");
   private Pattern help = Pattern.compile("help");
   private CircularBuffer<IRCMessage> lineBuffer;
   private Set<IRCUser> watched = new HashSet<IRCUser>();
   private static DateFormat dateFormat = new SimpleDateFormat("HH:MM:ss");
+  private static Map<IRCUser,Date> lastSeen = new HashMap<IRCUser,Date>();
   private static final int BUFFER_SIZE = 10000;
   
   public Scrollback() {
@@ -45,11 +48,6 @@ public class Scrollback extends AbstractChatWatchingPrefixCommand {
     matcher = unregister.matcher(data);
     if (matcher.matches()){
       return processUnregistration(message);
-    }
-    matcher = display.matcher(data);
-    if (matcher.matches())
-    {
-      return displayScrollback(message);
     }
     matcher = help.matcher(data);
     if (matcher.matches())
@@ -78,14 +76,23 @@ public class Scrollback extends AbstractChatWatchingPrefixCommand {
   }
 
   private IRCMessage displayScrollback(IRCMessage message) {
+    Date minDate = lastSeen.get(message.getSender());
     Iterator<IRCMessage> scrollback = lineBuffer.borrowIterator();
-    StringBuffer response = new StringBuffer("Scrollback for " + message.getSender().getNick() + ":\n");
+    StringBuffer response = new StringBuffer("Scrollback:\n");
+    boolean addedLine = false;
     while (scrollback.hasNext())
     {
       IRCMessage next = scrollback.next();
-      response.append(generateScrollbackLine(next) + "\n");
+      if (minDate == null ||
+          minDate.before(next.getCreated()))
+      {
+        addedLine = true;
+        response.append(generateScrollbackLine(next) + "\n");
+      }
     }
     lineBuffer.returnIterator();
+    if (!addedLine)
+      return null;
     return message.createReply(response.toString());
   }
 
@@ -100,6 +107,7 @@ public class Scrollback extends AbstractChatWatchingPrefixCommand {
 
   @Override
   protected IRCMessage handlePublicChat(IRCMessage message) {
+    lastSeen.put(message.getSender(), message.getCreated());
     lineBuffer.put(message);
     return null;
   }
@@ -109,14 +117,17 @@ public class Scrollback extends AbstractChatWatchingPrefixCommand {
     {
       return displayScrollback(message);
     }
+    lastSeen.put(message.getSender(), message.getCreated());
     return null;
   }
 
   public IRCMessage handlePart(PartMessage message) {
+    lastSeen.put(message.getSender(), message.getCreated());
     return null;
   }
 
   public IRCMessage handleQuit(QuitMessage message) {
+    lastSeen.put(message.getSender(), message.getCreated());
     return null;
   }
 
