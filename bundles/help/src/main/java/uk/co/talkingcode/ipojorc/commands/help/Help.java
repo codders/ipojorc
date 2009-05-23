@@ -2,6 +2,7 @@ package uk.co.talkingcode.ipojorc.commands.help;
 
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Provides;
+import org.apache.felix.ipojo.annotations.Requires;
 
 import uk.co.talkingcode.ipojorc.api.AbstractPrefixCommand;
 import uk.co.talkingcode.ipojorc.api.IRCCommand;
@@ -15,6 +16,7 @@ public class Help extends AbstractPrefixCommand
     super("help");
   }
 
+  @Requires
   private IRCCommand[] commands;
 
   public String getDescription() {
