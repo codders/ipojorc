@@ -25,9 +25,9 @@ class Bot extends PircBot implements Runnable {
   
   private boolean stop = true;
   
-  @Requires
+  @Requires(optional=true, nullable=true)
   private IRCCommand[] commands;
-  @Requires
+  @Requires(optional=true, nullable=true)
   private IRCStatusWatcher[] watchers;
   
   @Property(mandatory=true)
