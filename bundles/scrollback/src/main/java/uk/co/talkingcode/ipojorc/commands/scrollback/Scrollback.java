@@ -52,7 +52,7 @@ public class Scrollback extends AbstractChatWatchingPrefixCommand {
     matcher = help.matcher(data);
     if (matcher.matches())
     {
-      return message.createReply("Send '!scrollback register' to register for scrollback, '!scrollback unregister' to unregister and '!scrollback display' to see the text you missed");
+      return message.createReply("Send '!scrollback register' to register for scrollback, '!scrollback unregister' to unregister");
     }
     return message.createReply("Unknown command: " + data);
   }
