@@ -1,7 +1,7 @@
 package uk.co.talkingcode.ipojorc.commands.define;
 
 import uk.co.talkingcode.ipojorc.api.AbstractPrefixCommand;
-import uk.co.talkingcode.ipojorc.api.IRCMessage;
+import uk.co.talkingcode.ipojorc.api.messages.IRCMessage;
 
 public class Define extends AbstractPrefixCommand {
 

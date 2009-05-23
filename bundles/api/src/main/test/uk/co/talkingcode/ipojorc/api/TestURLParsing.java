@@ -5,6 +5,8 @@ import static junit.framework.Assert.assertEquals;
 
 import org.junit.Test;
 
+import uk.co.talkingcode.ipojorc.api.messages.IRCMessage;
+
 public class TestURLParsing {
 
   @Test

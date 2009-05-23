@@ -1,0 +1,4 @@
+bin/
+bundle/
+conf/
+felix-cache/

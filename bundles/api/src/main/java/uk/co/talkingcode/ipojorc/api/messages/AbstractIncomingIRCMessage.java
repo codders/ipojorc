@@ -1,4 +1,6 @@
-package uk.co.talkingcode.ipojorc.api;
+package uk.co.talkingcode.ipojorc.api.messages;
+
+import uk.co.talkingcode.ipojorc.api.IRCCommand;
 
 public abstract class AbstractIncomingIRCMessage extends IRCMessage {
 

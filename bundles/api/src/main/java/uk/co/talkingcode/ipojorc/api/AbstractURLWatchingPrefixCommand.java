@@ -3,6 +3,8 @@ package uk.co.talkingcode.ipojorc.api;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import uk.co.talkingcode.ipojorc.api.messages.IRCMessage;
+
 public abstract class AbstractURLWatchingPrefixCommand extends AbstractPrefixCommand {
 
   private Pattern pattern = Pattern

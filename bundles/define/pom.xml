@@ -4,11 +4,10 @@
   <parent>
     <groupId>uk.co.talkingcode.ipojorc</groupId>
     <artifactId>base</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
   </parent>
   <artifactId>define-command</artifactId>
   <packaging>bundle</packaging>
-  <version>0.1-SNAPSHOT</version>
   <name>Define Command</name>
   <build>
     <plugins>
@@ -21,7 +20,7 @@
           <Private-Package>
             uk.co.talkingcode.ipojorc.commands.define
           </Private-Package>
-          <Export-Package>uk.co.talkingcode.ipojorc.api</Export-Package>
+          <Export-Package>uk.co.talkingcode.ipojorc.api.*</Export-Package>
           <Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
          </instructions>
          </configuration>
@@ -61,7 +60,7 @@
     <dependency>
       <groupId>uk.co.talkingcode.ipojorc</groupId>
       <artifactId>api</artifactId>
-      <version>0.1-SNAPSHOT</version>
+      <version>0.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>commons-lang</groupId>

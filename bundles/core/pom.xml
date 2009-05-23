@@ -4,11 +4,10 @@
   <parent>
     <groupId>uk.co.talkingcode.ipojorc</groupId>
     <artifactId>base</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
   </parent>
   <artifactId>core</artifactId>
   <packaging>bundle</packaging>
-  <version>0.1-SNAPSHOT</version>
   <name>Client Core</name>
   <build>
     <plugins>
@@ -19,8 +18,9 @@
         <configuration>
           <instructions>
             <Import-Package>
-uk.co.talkingcode.ipojorc.api,
+uk.co.talkingcode.ipojorc.api.*,
 *</Import-Package>
+          <Export-Package>uk.co.talkingcode.ipojorc.api.*</Export-Package>
           <Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
           <Private-Package>
             uk.co.talkingcode.ipojorc.core
@@ -68,7 +68,7 @@ uk.co.talkingcode.ipojorc.api,
     <dependency>
       <groupId>uk.co.talkingcode.ipojorc</groupId>
       <artifactId>api</artifactId>
-      <version>0.1-SNAPSHOT</version>
+      <version>0.2-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>

@@ -4,11 +4,10 @@
   <parent>
     <groupId>uk.co.talkingcode.ipojorc</groupId>
     <artifactId>base</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
   </parent>
   <artifactId>api</artifactId>
   <packaging>bundle</packaging>
-  <version>0.1-SNAPSHOT</version>
   <name>Command API</name>
   <build>
     <plugins>
@@ -19,7 +18,7 @@
         <configuration>
           <instructions>
           <Export-Package>
-            uk.co.talkingcode.ipojorc.api
+            uk.co.talkingcode.ipojorc.api.*
           </Export-Package>
          </instructions>
          </configuration>

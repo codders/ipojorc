@@ -11,7 +11,7 @@ import org.apache.sanselan.Sanselan;
 import org.apache.sanselan.common.IImageMetadata;
 
 import uk.co.talkingcode.ipojorc.api.AbstractURLWatchingPrefixCommand;
-import uk.co.talkingcode.ipojorc.api.IRCMessage;
+import uk.co.talkingcode.ipojorc.api.messages.IRCMessage;
 
 public class Exif extends AbstractURLWatchingPrefixCommand {
 

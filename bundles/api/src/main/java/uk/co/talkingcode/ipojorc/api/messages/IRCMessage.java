@@ -1,12 +1,12 @@
-package uk.co.talkingcode.ipojorc.api;
+package uk.co.talkingcode.ipojorc.api.messages;
 
 import java.util.Date;
 
+import uk.co.talkingcode.ipojorc.api.IRCUser;
+
 public class IRCMessage {
   String channel;
-  String sender;
-  String login;
-  String hostname;
+  IRCUser sender;
   String message;
   Date created;
   boolean processed;
@@ -18,9 +18,8 @@ public class IRCMessage {
   
   public IRCMessage(String sender, String login, String hostname,
       String message) {
-    this.sender = sender;
-    this.login = login;
-    this.hostname = hostname;
+    this();
+    this.sender = new IRCUser(sender, login, hostname);
     this.message = message;
   }
 
@@ -49,28 +48,12 @@ public class IRCMessage {
     this.channel = channel;
   }
 
-  public String getSender() {
+  public IRCUser getSender() {
     return sender;
   }
 
-  public void setSender(String sender) {
+  public void setSender(IRCUser sender) {
     this.sender = sender;
-  }
-
-  public String getLogin() {
-    return login;
-  }
-
-  public void setLogin(String login) {
-    this.login = login;
-  }
-
-  public String getHostname() {
-    return hostname;
-  }
-
-  public void setHostname(String hostname) {
-    this.hostname = hostname;
   }
 
   public String getMessage() {
@@ -105,7 +88,7 @@ public class IRCMessage {
     }
     else
     {
-      reply.setChannel(sender);
+      reply.setChannel(sender.getNick());
     }
     reply.setMessage(message);
     return reply;

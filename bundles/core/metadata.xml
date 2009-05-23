@@ -2,7 +2,8 @@
 <iPOJO>
   <component className="uk.co.talkingcode.ipojorc.core.Bot"
     architecture="true">
-    <requires field="commands" required="false"/>
+    <requires field="commands" optional="true" nullable="true"/>
+    <requires field="watchers" optional="true" nullable="true"/>
     <callback transition="validate" method="starting" />
     <callback transition="invalidate" method="stopping" />
 		<provides>
@@ -12,8 +13,8 @@
 		</provides>
   </component>
   <instance component="uk.co.talkingcode.ipojorc.core.Bot">
-  	<property name="channel" value="#tropic"/>
+  	<property name="channel" value="#test"/>
   	<property name="server" value="irc.tropic.org.uk"/>
-  	<property name="nick" value="manbot"/>
+  	<property name="nick" value="manbot2"/>
   </instance>
 </iPOJO>

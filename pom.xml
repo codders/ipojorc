@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>uk.co.talkingcode.ipojorc</groupId>
   <artifactId>base</artifactId>
-  <version>0.1-SNAPSHOT</version>
+  <version>0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>iPOJO IRC Client</name>
   <description>Pluggable IRC client on Felix</description>
@@ -26,6 +26,7 @@
       	<module>bundles/help</module>
       	<module>bundles/exif</module>
       	<module>bundles/title</module>
+      	<module>bundles/scrollback</module>
         <module>main</module>
       </modules>
     </profile>
@@ -62,8 +63,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.0.2</version>
         <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
+          <source>1.6</source>
+          <target>1.6</target>
           <showDeprecation>true</showDeprecation>
           <compilerArgument>-Xlint:unchecked,deprecation,fallthrough,finally</compilerArgument>
           <fork>true</fork>

@@ -6,9 +6,9 @@
     <artifactId>base</artifactId>
     <version>0.2-SNAPSHOT</version>
   </parent>
-  <artifactId>exif-command</artifactId>
+  <artifactId>scrollback-command</artifactId>
   <packaging>bundle</packaging>
-  <name>Exif Command</name>
+  <name>Scrollback Command</name>
   <build>
     <plugins>
       <plugin>
@@ -18,29 +18,11 @@
         <configuration>
           <instructions>
           <Private-Package>
-            uk.co.talkingcode.ipojorc.commands.exif
+            uk.co.talkingcode.ipojorc.commands.scrollback
           </Private-Package>
-          <Export-Package>uk.co.talkingcode.ipojorc.api</Export-Package>
-          <Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
+          <Export-Package>uk.co.talkingcode.ipojorc.api.*</Export-Package>
          </instructions>
          </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>embed-dependencies</id>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <includeArtifactIds>sanselan</includeArtifactIds>
-              <excludeTransitive>false</excludeTransitive>
-              <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-            </configuration> 
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.felix</groupId>
@@ -62,10 +44,5 @@
       <artifactId>api</artifactId>
       <version>0.2-SNAPSHOT</version>
     </dependency>
-    <dependency>
-      <groupId>org.apache.sanselan</groupId>
-      <artifactId>sanselan</artifactId>
-      <version>0.97-incubator</version>
-    </dependency> 
   </dependencies>
 </project>
