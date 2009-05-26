@@ -3,15 +3,19 @@ package uk.co.talkingcode.ipojorc.commands.title;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.httpclient.HttpMethod;
+
 public class CountedWrapper extends InputStream {
 
   private int limit;
   private InputStream wrapped;
   private int read;
+  private HttpMethod method;
 
-  public CountedWrapper(int limit, InputStream wrapped) {
+  public CountedWrapper(int limit, HttpMethod get) throws IOException {
     this.limit = limit;
-    this.wrapped = wrapped;
+    this.wrapped = get.getResponseBodyAsStream();
+    this.method = get;
     this.read = 0;
   }
 
@@ -26,7 +30,7 @@ public class CountedWrapper extends InputStream {
 
   @Override
   public void close() throws IOException {
-    wrapped.close();
+    method.abort();
   }
 
 }

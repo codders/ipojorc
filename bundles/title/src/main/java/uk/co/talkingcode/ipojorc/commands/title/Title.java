@@ -38,8 +38,8 @@ public class Title extends AbstractURLWatchingPrefixCommand {
     HttpMethod get = new GetMethod(url);
     try {
       client.executeMethod(get);
-      InputStream is = get.getResponseBodyAsStream();
-      return getTitle(is);
+      CountedWrapper wrapper = new CountedWrapper(4096, get);
+      return getTitle(wrapper);
     } catch (HttpException e) {
       e.printStackTrace();
     } catch (IOException e) {
@@ -51,12 +51,11 @@ public class Title extends AbstractURLWatchingPrefixCommand {
   }
 
   public String getTitle(InputStream is) throws IOException {
-    InputStream countedWrapper = new CountedWrapper(4096, is);
     try {
       int linecount = 0;
       String line = null;
       BufferedReader reader = new BufferedReader(new InputStreamReader(
-          countedWrapper));
+          is));
       while (linecount < 100 && (line = reader.readLine()) != null) {
         Matcher matcher = pattern.matcher(line);
         if (matcher.matches()) {
@@ -67,7 +66,7 @@ public class Title extends AbstractURLWatchingPrefixCommand {
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
-      countedWrapper.close();
+      is.close();
     }
     return null;
   }
@@ -75,7 +74,11 @@ public class Title extends AbstractURLWatchingPrefixCommand {
   @Override
   protected IRCMessage handleURL(IRCMessage message, String url) {
     if (auto)
-      return message.createReply(getTitle(url));
+    {
+      String result = getTitle(url);
+      if (result != null)
+        return message.createReply(getTitle(url));
+    }
     return null;
   }
 
@@ -97,7 +100,9 @@ public class Title extends AbstractURLWatchingPrefixCommand {
       url = lastUrl;
     }
     if (url != null && url.length() != 0) {
-      return message.createReply(getTitle(url));
+      String result = getTitle(url);
+      if (result != null)
+        return message.createReply(getTitle(url));
     }
     return null;
   }

@@ -21,7 +21,13 @@
             uk.co.talkingcode.ipojorc.commands.title
           </Private-Package>
           <Export-Package>uk.co.talkingcode.ipojorc.api.*</Export-Package>
-          <Import-Package>org.apache.commons.*;resolution:=optional,*</Import-Package>
+          <Import-Package>org.apache.avalon.*;resolution:=optional,
+                          org.apache.log.*;resolution:=optional,
+                          com.sun.*;resolution:=optional,
+                          javax.*;resolution:=optional,
+                          org.xml.*;resolution:=optional,
+                          org.w3c.*;resolution:=optional,
+                          *</Import-Package>
           <Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
          </instructions>
          </configuration>
@@ -48,7 +54,7 @@
               <goal>copy-dependencies</goal>
             </goals>
             <configuration>
-              <includeArtifactIds>commons-lang,commons-httpclient</includeArtifactIds>
+              <includeArtifactIds>commons-lang,commons-httpclient,commons-logging,commons-logging-api,log4j,commons-codec</includeArtifactIds>
               <excludeTransitive>false</excludeTransitive>
               <outputDirectory>${project.build.outputDirectory}</outputDirectory>
             </configuration>
@@ -74,6 +80,26 @@
       <artifactId>commons-lang</artifactId>
       <version>2.4</version>
     </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.3</version>
+    </dependency>
+    <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>1.1.1</version>
+    </dependency> 
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging-api</artifactId>
+      <version>1.1</version>
+    </dependency> 
+    <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.14</version>
+    </dependency> 
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.ipojo.annotations</artifactId>
