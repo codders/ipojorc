@@ -4,7 +4,7 @@
   <parent>
     <groupId>uk.co.talkingcode.ipojorc</groupId>
     <artifactId>base</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.3-SNAPSHOT</version>
   </parent>
   <artifactId>title-command</artifactId>
   <packaging>bundle</packaging>
@@ -21,6 +21,7 @@
             uk.co.talkingcode.ipojorc.commands.title
           </Private-Package>
           <Export-Package>uk.co.talkingcode.ipojorc.api.*</Export-Package>
+          <Import-Package>org.apache.commons.*;resolution:=optional,*</Import-Package>
           <Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
          </instructions>
          </configuration>
@@ -47,7 +48,7 @@
               <goal>copy-dependencies</goal>
             </goals>
             <configuration>
-              <includeArtifactIds>commons-lang</includeArtifactIds>
+              <includeArtifactIds>commons-lang,commons-httpclient</includeArtifactIds>
               <excludeTransitive>false</excludeTransitive>
               <outputDirectory>${project.build.outputDirectory}</outputDirectory>
             </configuration>
@@ -60,7 +61,7 @@
     <dependency>
       <groupId>uk.co.talkingcode.ipojorc</groupId>
       <artifactId>api</artifactId>
-      <version>0.2-SNAPSHOT</version>
+      <version>0.3-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
@@ -78,5 +79,10 @@
       <artifactId>org.apache.felix.ipojo.annotations</artifactId>
       <version>1.2.0</version>
 		</dependency>
+		<dependency>
+	    <groupId>commons-httpclient</groupId>
+    	<artifactId>commons-httpclient</artifactId>
+    	<version>3.1</version>
+		</dependency> 
   </dependencies>
 </project>

@@ -4,7 +4,7 @@
   <parent>
     <groupId>uk.co.talkingcode.ipojorc</groupId>
     <artifactId>base</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.3-SNAPSHOT</version>
   </parent>
   <artifactId>api</artifactId>
   <packaging>bundle</packaging>

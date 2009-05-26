@@ -28,6 +28,11 @@ public class Exif extends AbstractURLWatchingPrefixCommand {
   }
 
   @Override
+  protected IRCMessage handleURL(IRCMessage message, String url) {
+    return null;
+  }
+
+  @Override
   protected IRCMessage handleCommand(IRCMessage message, String data) {
     String url = data;
     if (url == null || url.length() == 0) {

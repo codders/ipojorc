@@ -93,6 +93,8 @@ class Bot extends PircBot implements Runnable {
     System.out.println(commands.length + " handlers");
     for (int i=0; i<commands.length; i++)
     {
+      if (commands[i] == null)
+        continue;
       IRCMessage reply = ircMessage.dispatchToCommand(commands[i]);
       while (reply != null)
       {

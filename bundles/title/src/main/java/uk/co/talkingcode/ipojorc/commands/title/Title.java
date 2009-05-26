@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.felix.ipojo.annotations.Component;
 import org.apache.felix.ipojo.annotations.Provides;
@@ -17,10 +19,12 @@ import uk.co.talkingcode.ipojorc.api.AbstractURLWatchingPrefixCommand;
 import uk.co.talkingcode.ipojorc.api.messages.IRCMessage;
 
 @Provides
-@Component(name="TitleCommandProvider", architecture=true)
+@Component(name = "TitleCommandProvider", architecture = true)
 public class Title extends AbstractURLWatchingPrefixCommand {
-  private static Pattern pattern = Pattern
-      .compile(".*<title>(.*)</title>.*");
+
+  private static Pattern pattern = Pattern.compile(".*<title>(.*)</title>.*");
+  private HttpClient client = new HttpClient();
+  private boolean auto = true;
 
   public Title() {
     super("title");
@@ -30,41 +34,64 @@ public class Title extends AbstractURLWatchingPrefixCommand {
     return "!title - Retrieves the title for a URL";
   }
 
-  private static String getTitle(String url)
-  {
+  private String getTitle(String url) {
+    HttpMethod get = new GetMethod(url);
     try {
-      return getTitle(new URL(url).openStream());
-    } catch (MalformedURLException e) {
+      client.executeMethod(get);
+      InputStream is = get.getResponseBodyAsStream();
+      return getTitle(is);
+    } catch (HttpException e) {
       e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
+    } finally {
+      get.releaseConnection();
     }
     return null;
   }
-  
-  public static String getTitle(InputStream is)
-  {
+
+  public String getTitle(InputStream is) throws IOException {
+    InputStream countedWrapper = new CountedWrapper(4096, is);
     try {
       int linecount = 0;
       String line = null;
-      BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-      while (linecount < 100 && (line = reader.readLine()) != null)
-      {
+      BufferedReader reader = new BufferedReader(new InputStreamReader(
+          countedWrapper));
+      while (linecount < 100 && (line = reader.readLine()) != null) {
         Matcher matcher = pattern.matcher(line);
-        if (matcher.matches())
-        {
+        if (matcher.matches()) {
           return StringEscapeUtils.unescapeHtml(matcher.group(1));
         }
         linecount++;
       }
     } catch (IOException e) {
       e.printStackTrace();
+    } finally {
+      countedWrapper.close();
     }
     return null;
   }
 
   @Override
+  protected IRCMessage handleURL(IRCMessage message, String url) {
+    if (auto)
+      return message.createReply(getTitle(url));
+    return null;
+  }
+
+  @Override
   protected IRCMessage handleCommand(IRCMessage message, String data) {
+    if ("noauto".equals(data)) {
+      auto = false;
+      return message.createReply("Auto titling disabled");
+    }
+    if ("auto".equals(data)) {
+      auto = true;
+      return message.createReply("Auto titling enabled");
+    }
+    if ("help".equals(data)) {
+      return message.createReply("'auto' to enabled auto titling, 'noauto' to disable it");
+    }
     String url = data;
     if (url == null || url.length() == 0) {
       url = lastUrl;

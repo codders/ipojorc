@@ -22,6 +22,11 @@ public class TestURLParsing {
       public String getDescription() {
         return null;
       }
+
+      @Override
+      protected IRCMessage handleURL(IRCMessage message, String url) {
+        return null;
+      }
     };
     
     assertNull("Expected no url", command.lastUrl);

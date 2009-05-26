@@ -28,6 +28,8 @@ public class Help extends AbstractPrefixCommand
     IRCMessage result = message.createReply("Help:");
     for (int i=0; i<commands.length; i++)
     {
+      if (commands[i] == null)
+        continue;
       result.appendMessage(message.createReply(commands[i].getDescription()));
     }
     return result;
