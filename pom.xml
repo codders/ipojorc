@@ -27,6 +27,7 @@
       	<module>bundles/exif</module>
       	<module>bundles/title</module>
       	<module>bundles/scrollback</module>
+      	<module>bundles/ruby-support</module>
         <module>main</module>
       </modules>
     </profile>
