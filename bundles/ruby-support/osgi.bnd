@@ -1,8 +1,0 @@
-#-----------------------------------------------------------------
-# Use this file to add customized Bnd instructions for the bundle
-#-----------------------------------------------------------------
-
-Bundle-Activator: ${bundle.namespace}.internal.ExampleActivator
-Import-Package: com.sun.script.jruby, javax.script, *
-#Import-Package: javax.script, *
-#DynamicImport-Package: com.sun.script.*
