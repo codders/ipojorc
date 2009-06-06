@@ -18,6 +18,7 @@
         <configuration>
           <instructions>
             <RubyScript>example.rb</RubyScript>
+            <RubyIRCCommands>RubyEcho</RubyIRCCommands>
           </instructions>
         </configuration>
       </plugin>

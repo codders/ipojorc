@@ -1,6 +1,8 @@
 package uk.co.talkingcode.ipojorc.api;
 
 import uk.co.talkingcode.ipojorc.api.messages.IRCMessage;
+import uk.co.talkingcode.ipojorc.api.messages.PrivateIRCMessage;
+import uk.co.talkingcode.ipojorc.api.messages.PublicIRCMessage;
 
 public abstract class AbstractPrefixCommand implements IRCCommand {
 
@@ -21,11 +23,11 @@ public abstract class AbstractPrefixCommand implements IRCCommand {
     return null;    
   }
   
-  public IRCMessage handlePublicMessage(IRCMessage message) {
+  public IRCMessage handlePublicMessage(PublicIRCMessage message) {
     return detectAndProcessPrefixCommand(message);
   }
 
-  public IRCMessage handlePrivateMessage(IRCMessage message) {
+  public IRCMessage handlePrivateMessage(PrivateIRCMessage message) {
     return detectAndProcessPrefixCommand(message);
   }
 
