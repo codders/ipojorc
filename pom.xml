@@ -28,6 +28,7 @@
       	<module>bundles/title</module>
       	<module>bundles/scrollback</module>
       	<module>bundles/ruby-support</module>
+      	<module>bundles/ruby-echo</module>
         <module>main</module>
       </modules>
     </profile>
