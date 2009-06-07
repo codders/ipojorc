@@ -8,7 +8,7 @@
   </parent>
   <artifactId>ruby-echo</artifactId>
   <packaging>bundle</packaging>
-  <name>Ruby test file</name>
+  <name>Ruby echo command</name>
   <build>
     <plugins>
       <plugin>
