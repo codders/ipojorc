@@ -127,6 +127,14 @@
                      <overWrite>true</overWrite>
                      <outputDirectory>${project.build.directory}/bundle</outputDirectory>
                    </artifactItem>
+                   <artifactItem>
+                     <groupId>${pom.groupId}</groupId>
+                     <artifactId>ruby-echo</artifactId>
+                     <version>${pom.version}</version>
+                     <type>jar</type>
+                     <overWrite>true</overWrite>
+                     <outputDirectory>${project.build.directory}/bundle</outputDirectory>
+                   </artifactItem>
                  </artifactItems>
             </configuration>
           </execution>
