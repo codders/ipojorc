@@ -1,36 +1,55 @@
 package uk.co.talkingcode.ipojorc.ruby;
 
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.osgi.framework.Bundle;
 
 public class BundleWrappingClassloader extends ClassLoader {
 
-  private Bundle bundle;
+  private Set<Bundle> bundles = new HashSet<Bundle>();
 
-  public BundleWrappingClassloader(ClassLoader parent, Bundle bundle)
-  {
+  public BundleWrappingClassloader(ClassLoader parent) {
     super(parent);
-    this.bundle = bundle;
   }
 
   @Override
   public URL getResource(String name) {
-    return bundle.getResource(name);
+    for (Bundle bundle : bundles) {
+      try {
+        System.out.println("Searching for " + name + " in " + bundle);
+        URL result = bundle.getResource(name);
+        if (result != null)
+          return result;
+      } catch (Exception e) {
+      }
+    }
+    return super.getResource(name);
   }
 
   @Override
   protected Class<?> findClass(String name) throws ClassNotFoundException {
-    try
-    {
-      return bundle.loadClass(name);
-    }
-    catch (Exception e)
-    {
-      System.err.println("Unable to load " + name + " from bundle. Searching default classpath");
+    for (Bundle bundle : bundles) {
+      try {
+        System.out.println("Searching for " + name + " in " + bundle);
+        return bundle.loadClass(name);
+      } catch (Exception e) {
+      }
     }
     return super.findClass(name);
   }
-  
-  
+
+  public void addBundle(Bundle bundle) {
+    if (bundles.add(bundle)) {
+      System.out.println("Added bundle: " + bundle);
+    }
+  }
+
+  public void removeBundle(Bundle bundle) {
+    if (bundles.remove(bundle)) {
+      System.out.println("Removed bundle: " + bundle);
+    }
+  }
+
 }

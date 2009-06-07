@@ -29,7 +29,7 @@
                            org.jruby.*;resolution:=optional,
                           *</Import-Package>
           <Export-Package>uk.co.talkingcode.ipojorc.api.*</Export-Package>
-          <Bundle-Activator>uk.co.talkingcode.ipojorc.ruby.ExampleActivator</Bundle-Activator>
+          <Bundle-Activator>uk.co.talkingcode.ipojorc.ruby.RubyBundleMonitor</Bundle-Activator>
          </instructions>
          </configuration>
       </plugin>

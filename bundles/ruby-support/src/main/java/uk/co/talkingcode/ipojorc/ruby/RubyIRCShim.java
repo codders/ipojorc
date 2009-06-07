@@ -21,7 +21,7 @@ public class RubyIRCShim implements IRCCommand, IRCStatusWatcher {
   @Override
   public String getDescription() {
     StringBuilder descriptions = new StringBuilder();
-    IRCCommand[] commands = ExampleActivator.getIRCCommands();
+    IRCCommand[] commands = RubyBundleMonitor.getIRCCommands();
     if (commands.length > 0) {
       for (IRCCommand command : commands) {
         descriptions.append("\n" + command.getDescription());
@@ -58,7 +58,7 @@ public class RubyIRCShim implements IRCCommand, IRCStatusWatcher {
   }
 
   private IRCMessage handleWatcherMessage(AbstractStatusMessage message) {
-    IRCStatusWatcher[] watchers = ExampleActivator.getIRCStatusWatchers();
+    IRCStatusWatcher[] watchers = RubyBundleMonitor.getIRCStatusWatchers();
     for (IRCStatusWatcher watcher : watchers) {
       IRCMessage result = message.dispatchToStatusWatcher(watcher);
       if (result != null)
@@ -68,7 +68,7 @@ public class RubyIRCShim implements IRCCommand, IRCStatusWatcher {
   }
 
   private IRCMessage handleIRCMessage(AbstractIncomingIRCMessage ircMessage) {
-    IRCCommand[] commands = ExampleActivator.getIRCCommands();
+    IRCCommand[] commands = RubyBundleMonitor.getIRCCommands();
     for (IRCCommand command : commands) {
       IRCMessage result = ircMessage.dispatchToCommand(command);
       if (result != null)

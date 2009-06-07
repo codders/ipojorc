@@ -3,7 +3,10 @@ package uk.co.talkingcode.ipojorc.ruby;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.io.IOUtils;
 import org.jruby.Ruby;
@@ -23,10 +26,12 @@ import uk.co.talkingcode.ipojorc.api.IRCStatusWatcher;
 /**
  * Extension of the default OSGi bundle activator
  */
-public class ExampleActivator implements BundleActivator, BundleListener {
+public class RubyBundleMonitor implements BundleActivator, BundleListener {
   private Ruby runtime;
-  private static List<IRCCommand> ircCommands = new ArrayList<IRCCommand>();
-  private static List<IRCStatusWatcher> ircStatusWatchers = new ArrayList<IRCStatusWatcher>();
+  private BundleWrappingClassloader wrappingClassloader;
+  private static Set<IRCCommand> ircCommands = new HashSet<IRCCommand>();
+  private static Set<IRCStatusWatcher> ircStatusWatchers = new HashSet<IRCStatusWatcher>();
+  private static Map<Bundle, Set<Object>> bundleCommands = new HashMap<Bundle, Set<Object>>();
 
   /**
    * Called whenever the OSGi framework starts our bundle
@@ -34,7 +39,9 @@ public class ExampleActivator implements BundleActivator, BundleListener {
   public void start(BundleContext bc) throws Exception {
     bc.addBundleListener(this);
     RubyInstanceConfig config = new RubyInstanceConfig();
-    config.setLoader(new BundleWrappingClassloader(Thread.currentThread().getContextClassLoader(), bc.getBundle()));
+    wrappingClassloader = new BundleWrappingClassloader(Thread.currentThread().getContextClassLoader());
+    wrappingClassloader.addBundle(bc.getBundle());
+    config.setLoader(wrappingClassloader);
     runtime = Ruby.newInstance(config);
     runtime.getLoadService().init(new ArrayList<String>());
   }
@@ -58,25 +65,42 @@ public class ExampleActivator implements BundleActivator, BundleListener {
       System.out.println("Foreign Bundle started");
       String scriptNames = stringBundleHeader(e.getBundle(), "RubyScript");
       if (scriptNames != null) {
+        wrappingClassloader.addBundle(e.getBundle());
         evalBundleScripts(scriptNames, e.getBundle());
         String commandClasses = stringBundleHeader(e.getBundle(), "RubyIRCCommands");
-        loadIRCCommands(commandClasses);
+        loadIRCCommands(commandClasses, e.getBundle());
+      }
+    } else if (e.getType() == BundleEvent.STOPPING) {
+      System.out.println("Foreign Bundle stopped");
+      wrappingClassloader.removeBundle(e.getBundle());
+      Set<Object> commands = bundleCommands.get(e.getBundle());
+      if (commands != null) {
+        for (Object command : commands) {
+          ircCommands.remove(command);
+          ircStatusWatchers.remove(command);
+        }
       }
     }
   }
 
-  private void loadIRCCommands(String commandClassNames) {
+  private void loadIRCCommands(String commandClassNames, Bundle bundle) {
+    if (bundleCommands.get(bundle) == null)
+      bundleCommands.put(bundle, new HashSet<Object>());
+    Set<Object> thisBundlesCommands = bundleCommands.get(bundle);
     String[] commandClasses = commandClassNames.split(",");
     for (String commandClassName : commandClasses) {
       System.out.println("Evaluating class: " + commandClassName);
       RubyClass commandClass = runtime.getClass(commandClassName);
       IRubyObject commandInstance = commandClass.newInstance(runtime.getCurrentContext(), new IRubyObject[] {}, null);
       if (rubyObjectImplementsInterface(commandInstance, IRCCommand.class)) {
-        ircCommands.add(new IRCCommandWrapper(commandInstance, runtime));
+        IRCCommand command = new IRCCommandWrapper(commandInstance, runtime);
+        ircCommands.add(command);
+        thisBundlesCommands.add(command);
       }
-      if (rubyObjectImplementsInterface(commandInstance, IRCStatusWatcher.class))
-      {
-        ircStatusWatchers.add(new IRCStatusWatcherWrapper(commandInstance, runtime));
+      if (rubyObjectImplementsInterface(commandInstance, IRCStatusWatcher.class)) {
+        IRCStatusWatcher watcher = new IRCStatusWatcherWrapper(commandInstance, runtime);
+        ircStatusWatchers.add(watcher);
+        thisBundlesCommands.add(watcher);
       }
     }
   }
@@ -109,15 +133,13 @@ public class ExampleActivator implements BundleActivator, BundleListener {
       }
     }
   }
-  
-  public static IRCCommand[] getIRCCommands()
-  {
+
+  public static IRCCommand[] getIRCCommands() {
     return ircCommands.toArray(new IRCCommand[] {});
   }
-  
-  public static IRCStatusWatcher[] getIRCStatusWatchers()
-  {
+
+  public static IRCStatusWatcher[] getIRCStatusWatchers() {
     return ircStatusWatchers.toArray(new IRCStatusWatcher[] {});
   }
-  
+
 }
