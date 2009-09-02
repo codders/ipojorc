@@ -29,6 +29,7 @@
       	<module>bundles/scrollback</module>
       	<module>bundles/ruby-support</module>
       	<module>bundles/ruby-echo</module>
+        <module>bundles/ruby-lyricfinder</module>
         <module>main</module>
       </modules>
     </profile>

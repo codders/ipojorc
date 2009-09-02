@@ -26,6 +26,7 @@
                            javax.microedition.*;resolution:=optional,
                            javax.servlet.*;resolution:=optional,
                            sun.misc.*;resolution:=optional,
+                           sun.nio.*;resolution:=optional,
                            org.jruby.*;resolution:=optional,
                           *</Import-Package>
           <Export-Package>uk.co.talkingcode.ipojorc.api.*</Export-Package>

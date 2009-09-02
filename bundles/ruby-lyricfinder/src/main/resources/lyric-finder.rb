@@ -16,7 +16,7 @@ class RubyLyricFinder
     puts "Handling: " + ircMessage.message
     match = ircMessage.message.match(/.*\/~ (.*) ~\/.*/)[1].gsub(/[,.\/\\!?'"]/, '')
     if (match != nil and match.size > 0)
-      return lyricfind(match)
+      return ircMessage.createReply(lyricfind(match))
     else
       return nil
     end
